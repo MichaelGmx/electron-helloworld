@@ -1,0 +1,14 @@
+{
+  "name": "electron-helloworld",
+  "version": "1.0.0",
+  "description": "Electron Helloworld",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Michael Oat",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^26.1.0"
+  }
+}
