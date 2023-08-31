@@ -14,6 +14,10 @@ const createWindow = function () {
   mainWin = new BrowserWindow({
     width: 800,
     height: 600,
+
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+    },
     
     // frame: false,   // 无边框窗口，菜单栏也会一并被隐藏
 
@@ -24,11 +28,7 @@ const createWindow = function () {
     //   symbolColor: '#74b1be',
     //   height: 60
     // },
-    transparent: true,
-
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
+    // transparent: true,
   });
 
   mainWin.loadFile('index.html');

@@ -2,6 +2,11 @@
  * 预加载
  * - 此文件是预加载脚本用，在renderer.js渲染前加载
  * - 有权限访问 window、document、Node.js环境
+ * 
+ * 目前的版本（Electron 12+），默认情况下，启用了 上下文隔离
+ * 给渲染进程(renderer.js) 暴露一个方法就必须使用 contextBridge.exposeInMainWorld
+ * 并且考虑到安全性，还需配合ipcRenderer.invoke()方法，而不是直接返回特权API本身
+ * 参考：https://www.electronjs.org/zh/docs/latest/tutorial/context-isolation
  */
 
 const { contextBridge, ipcRenderer } = require('electron');

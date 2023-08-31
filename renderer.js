@@ -1,9 +1,15 @@
+/********
+ * renderer渲染器 无权直接访问 node.js相关API（包括 require）
+ * 所以 使用的参数 或 调用的方法 都是preload.js或其它地方输出出来的
+ * 如下：window.xxx
+ */
+
 const infoEl = document.getElementById('info');
 
 // 以下调用的 versions 相关内容，都是在预加载 preload.js 中定义的
-const nodeVersion     = versions.node();
-const chromeVersion   = versions.chrome();
-const electronVersion = versions.electron();
+const nodeVersion     = window.versions.node();
+const chromeVersion   = window.versions.chrome();
+const electronVersion = window.versions.electron();
 
 infoEl.innerHTML = `本应用正在使用
                     <b>Node.js (v${nodeVersion})</b>, 
@@ -15,12 +21,12 @@ infoEl.innerHTML = `本应用正在使用
  * Dark/Light Mode toggle
  */
 document.getElementById('toggle-dark-mode').addEventListener('click', async () => {
-  const isDarkMode = await darkMode.toggle()
+  const isDarkMode = await window.darkMode.toggle()
   document.getElementById('theme-source').innerHTML = isDarkMode ? 'Dark' : 'Light'
 });
 
 document.getElementById('reset-to-system').addEventListener('click', async () => {
-  await darkMode.system()
+  await window.darkMode.system()
   document.getElementById('theme-source').innerHTML = 'System'
 });
 
@@ -31,7 +37,7 @@ document.getElementById('reset-to-system').addEventListener('click', async () =>
  */
 document.getElementById('dragEl').ondragstart = (event) => {
   event.preventDefault()
-  uxNativeDrag.startDrag('drag-and-drop.md')
+  window.uxNativeDrag.startDrag('drag-and-drop.md')
 }
 
 
