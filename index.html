@@ -10,12 +10,44 @@
   <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
 
   <title>Electron Helloworld</title>
+
+  <link href="./node_modules/fontawesome-4.7/css/font-awesome.min.css" rel="stylesheet">
+  <link href="./style/index.css" rel="stylesheet">
 </head>
 
 <body>
-  <h1>Hello Electron</h1>
-  <p>👋</p>
-  <p id="info"></p>
+  <section class="control-panel">
+    <h1>👋Hello Electron</h1>
+    <p id="info"></p>
+  </section>
+
+  <br>
+
+  <section class="control-panel">
+    <p>Current theme source: <strong id="theme-source">System</strong></p>
+
+    <button id="toggle-dark-mode">Toggle Dark Mode</button>
+    <button id="reset-to-system">Reset to System Theme</button>
+  </section>
+
+  <br>
+
+  <section class="control-panel">
+    <p>Drag <b>the doc Icon</b> below to somewhere in your OS (Finder/Explorer, Desktop, etc.) to copy an example markdown file.</p>
+    <label>
+      <i id="dragEl" draggable="true" class="fa fa-file-text"></i>
+      drag-and-drop.md
+    </label>
+  </section>
+
+  <br>
+
+  <section class="control-panel">
+    <p>After launching this application, you should see the system notification.</p>
+    <p id="output">Click it to see the effect in this interface.</p>
+
+    <button id="btn-show-notify">show Notify</button>
+  </section>
   
   <script src="./renderer.js"></script>
 </body>

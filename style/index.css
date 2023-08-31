@@ -1,0 +1,29 @@
+/* * { user-select: none; } */
+
+:root {
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  body { background: #333; color: white; }
+}
+
+@media (prefers-color-scheme: light) {
+  body { background: #ddd; color: black; }
+}
+
+.control-panel {
+  display: inline-block;
+  border: solid 1px #999;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+#dragEl {
+  font-size: 22px;
+}
+
+#output {
+  background: #fff;
+}

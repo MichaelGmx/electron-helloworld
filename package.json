@@ -10,5 +10,8 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^26.1.0"
+  },
+  "dependencies": {
+    "fontawesome-4.7": "^4.7.0"
   }
 }
