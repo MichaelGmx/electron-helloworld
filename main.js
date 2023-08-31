@@ -1,4 +1,4 @@
-const { app, BrowserWindow, BrowserView } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
 const { gbShortcut } = require('./common/globalFn');
@@ -9,6 +9,9 @@ const { trayHander } = require('./layout/tray');
 let mainWin;
 let progressInterval;
 
+let bluetoothPinCallback
+let selectBluetoothCallback
+
 // 创建窗口
 const createWindow = function () {
   mainWin = new BrowserWindow({
@@ -18,19 +21,44 @@ const createWindow = function () {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
-    
-    // frame: false,   // 无边框窗口，菜单栏也会一并被隐藏
 
-    // titleBarStyle: 'hidden',
-    // titleBarOverlay: true,
-    // titleBarOverlay: {
-    //   color: '#2f3241',
-    //   symbolColor: '#74b1be',
-    //   height: 60
-    // },
-    // transparent: true,
+    // frame: false,   // 无边框窗口，菜单栏也会一并被隐藏
   });
 
+
+
+  mainWin.webContents.on('select-bluetooth-device', (event, deviceList, callback) => {
+    event.preventDefault()
+    selectBluetoothCallback = callback
+    const result = deviceList.find((device) => {
+      return device.deviceName === 'test'
+    })
+    if (result) {
+      callback(result.deviceId)
+    } else {
+      // The device wasn't found so we need to either wait longer (eg until the
+      // device is turned on) or until the user cancels the request
+    }
+  })
+
+  ipcMain.on('cancel-bluetooth-request', (event) => {
+    selectBluetoothCallback('')
+  })
+
+  // Listen for a message from the renderer to get the response for the Bluetooth pairing.
+  ipcMain.on('bluetooth-pairing-response', (event, response) => {
+    bluetoothPinCallback(response)
+  })
+
+  mainWin.webContents.session.setBluetoothPairingHandler((details, callback) => {
+    bluetoothPinCallback = callback
+    // Send a message to the renderer to prompt the user to confirm the pairing.
+    mainWin.webContents.send('bluetooth-pairing-request', details)
+  })
+
+
+
+  // 加载
   mainWin.loadFile('index.html');
 
   // 进度条Progress

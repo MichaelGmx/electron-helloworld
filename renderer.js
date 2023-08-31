@@ -52,3 +52,62 @@ document.getElementById('btn-show-notify').addEventListener('click', () => {
     document.getElementById('output').innerText = 'Notification clicked!';
   }
 });
+
+
+/**
+ * Bluetooth
+ */
+document.getElementById('btn-bluetooth-available').addEventListener('click', async () => {
+  const isAvailable = await navigator.bluetooth.getAvailability()
+
+  document.getElementById('bluetooth-available-result').innerHTML = isAvailable ? 
+    '<span class="text-success">Available</span>' : '<span class="text-error">Not Available</span>';
+})
+
+// 点击 测试 蓝牙
+document.getElementById('btn-bluetooth-test').addEventListener('click', async () => {
+  // web Bluetooth
+  // 参考：https://developer.mozilla.org/zh-CN/docs/Web/API/Bluetooth/requestDevice
+  const device = await navigator.bluetooth.requestDevice({
+    acceptAllDevices: true
+  })
+
+  if (device) {
+    document.getElementById('bluetooth-device-name').innerHTML = device.name || `ID: ${device.id}`  
+  } else {
+    document.getElementById('bluetooth-test-info').innerText = '未检测到任何 蓝牙适配器'
+  }
+})
+
+// 点击 取消 蓝牙请求
+document.getElementById('btn-bluetooth-cancel-request').addEventListener('click', () => {
+  window.electronAPI.cancelBluetoothRequest()
+})
+
+// 监听 蓝牙 匹配请求
+window.electronAPI.bluetoothPairingRequest((event, details) => {
+  const response = {}
+
+  switch (details.pairingKind) {
+    case 'confirm': {
+      response.confirmed = window.confirm(`Do you want to connect to device ${details.deviceId}?`)
+      break
+    }
+    case 'confirmPin': {
+      response.confirmed = window.confirm(`Does the pin ${details.pin} match the pin displayed on device ${details.deviceId}?`)
+      break
+    }
+    case 'providePin': {
+      const pin = window.prompt(`Please provide a pin for ${details.deviceId}.`)
+      if (pin) {
+        response.pin = pin
+        response.confirmed = true
+      } else {
+        response.confirmed = false
+      }
+    }
+  }
+
+  // 蓝牙 匹配 响应
+  window.electronAPI.bluetoothPairingResponse(response)
+})

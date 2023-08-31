@@ -1,3 +1,7 @@
+/********************************
+ * Common | Golbal
+ */
+
 /* * { user-select: none; } */
 
 :root {
@@ -11,6 +15,20 @@
 @media (prefers-color-scheme: light) {
   body { background: #ddd; color: black; }
 }
+
+.text-success {
+  color: rgb(18, 177, 3) !important;
+}
+
+.text-error {
+  color: rgb(177, 3, 3) !important;
+}
+
+
+
+/********************************
+ * Custom
+ */
 
 .control-panel {
   display: inline-block;
@@ -26,4 +44,8 @@
 
 #output {
   background: #fff;
+}
+
+#bluetooth-available-result {
+  font-weight: bold;
 }

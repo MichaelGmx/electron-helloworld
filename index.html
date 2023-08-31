@@ -33,6 +33,20 @@
   <br>
 
   <section class="control-panel">
+    <h2><i class="fa fa-bluetooth"></i> 蓝牙相关: </h2>
+
+    <button id="btn-bluetooth-available">Bluetooth Available test</button>
+    <p id="bluetooth-available-result"></p>
+
+    <button id="btn-bluetooth-test">Test Bluetooth</button>
+    <button id="btn-bluetooth-cancel-request">Cancel Bluetooth Request</button>
+
+    <p>Currently selected bluetooth device: <strong id="bluetooth-device-name"></strong></p>
+
+    <p id="bluetooth-test-info" class="text-error"></p>
+  </section>
+
+  <section class="control-panel">
     <p>Drag <b>the doc Icon</b> below to somewhere in your OS (Finder/Explorer, Desktop, etc.) to copy an example markdown file.</p>
     <label>
       <i id="dragEl" draggable="true" class="fa fa-file-text"></i>
